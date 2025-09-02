@@ -86,7 +86,7 @@ jobs:
         git add components/wifi-manager/webapp/*.cmake 
         git add components/wifi-manager/webapp/dist/*
         git commit -m "Update prebuilt objects [skip actions]"
-        git push  https://${{secrets.github_token}}@github.com/sle118/squeezelite-esp32.git
+        git push  https://${{secrets.github_token}}@github.com/MattRCole/squeezelite-esp32.git
     - name: Locally store commonly built objects
       uses: actions/upload-artifact@v4
       with:
@@ -220,10 +220,10 @@ jobs:
         asset_path: build/${{ env.artifact_file_name }}
         asset_name: ${{ env.artifact_file_name }}
         asset_content_type: application/octet-stream     
-  update_web_installer:
-    name: Update Web Installer After Release
-    needs: [ bootstrap, build ]
-    if: ${{ always() && !cancelled() && needs.bootstrap.outputs.release_flag == 1 && needs.bootstrap.outputs.mock == 0 }}
-    uses: ./.github/workflows/web_deploy.yml
-    secrets:
-      WEB_INSTALLER: ${{ secrets.WEB_INSTALLER }}
+  # update_web_installer:
+  #   name: Update Web Installer After Release
+  #   needs: [ bootstrap, build ]
+  #   if: ${{ always() && !cancelled() && needs.bootstrap.outputs.release_flag == 1 && needs.bootstrap.outputs.mock == 0 }}
+  #   uses: ./.github/workflows/web_deploy.yml
+  #   secrets:
+  #     WEB_INSTALLER: ${{ secrets.WEB_INSTALLER }}
