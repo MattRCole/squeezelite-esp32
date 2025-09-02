@@ -792,6 +792,8 @@ cJSON* network_wifi_get_new_array_json(cJSON** old) {
     return cJSON_CreateArray();
 }
 void network_wifi_global_init() {
+    ESP_LOGD(TAG, "Setting tx strength to 8.5db");
+    esp_wifi_set_max_tx_power(34); // 8.5db (0.25 * 34 = 8.5)
     network_wifi_get_new_array_json(&accessp_cjson);
     ESP_LOGD(TAG, "Loading existing wifi configuration (if any)");
     network_wifi_load_wifi_sta_config();
