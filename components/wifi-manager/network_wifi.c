@@ -792,8 +792,6 @@ cJSON* network_wifi_get_new_array_json(cJSON** old) {
     return cJSON_CreateArray();
 }
 void network_wifi_global_init() {
-    ESP_LOGD(TAG, "Setting tx strength to 8.5db");
-    esp_wifi_set_max_tx_power(34); // 8.5db (0.25 * 34 = 8.5)
     network_wifi_get_new_array_json(&accessp_cjson);
     ESP_LOGD(TAG, "Loading existing wifi configuration (if any)");
     network_wifi_load_wifi_sta_config();
@@ -1158,6 +1156,8 @@ esp_err_t network_wifi_connect(const char* ssid, const char* password) {
 
     // First Disconnect
     esp_wifi_disconnect();
+    ESP_LOGD(TAG, "Setting tx strength to 8.5db");
+    esp_wifi_set_max_tx_power(34); // 8.5db (0.25 * 34 = 8.5)
 
     config.sta.scan_method = WIFI_ALL_CHANNEL_SCAN;
     if ((err = esp_wifi_set_config(WIFI_IF_STA, &config)) != ESP_OK) {
