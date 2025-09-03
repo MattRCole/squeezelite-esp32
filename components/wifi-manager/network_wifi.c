@@ -1156,8 +1156,10 @@ esp_err_t network_wifi_connect(const char* ssid, const char* password) {
 
     // First Disconnect
     esp_wifi_disconnect();
-    ESP_LOGD(TAG, "Setting tx strength to 8.5db");
-    esp_wifi_set_max_tx_power(34); // 8.5db (0.25 * 34 = 8.5)
+    ESP_LOGI(TAG, "Setting tx strength to 8.5db");
+    if ((err = esp_wifi_set_max_tx_power(34)) != ESP_OK) { // 8.5db (0.25 * 34 = 8.5)
+        ESP_LOGE(TAG, "Failed to set tx strength, Error %s", esp_err_to_name(err));
+    }
 
     config.sta.scan_method = WIFI_ALL_CHANNEL_SCAN;
     if ((err = esp_wifi_set_config(WIFI_IF_STA, &config)) != ESP_OK) {
